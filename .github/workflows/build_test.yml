@@ -1,0 +1,27 @@
+
+name: Build and test
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v4
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Run Project1 tests
+      run: dotnet test TestProject1/TestProject1.csproj --no-build --verbosity normal
+    - name: Run Project2 tests
+      run: dotnet test TestProject2/TestProject2.csproj --no-build --verbosity normal
+    - name: Run Project3 tests
+      run: dotnet test TestProject3/TestProject3.csproj --no-build --verbosity normal
